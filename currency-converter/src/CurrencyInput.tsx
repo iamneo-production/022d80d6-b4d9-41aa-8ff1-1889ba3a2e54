@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Card, CardContent, Box } from '@mui/material';
 import CurrencyService from './services/currency-http.service';
+import ConversionResult from './ConversionResult';
 
 interface Currency {
   code: string;
@@ -11,11 +12,12 @@ interface CurrencyInputProps {
   setConvertedAmount: (amount: number | null) => void;
 }
 
-function CurrencyInput({ setConvertedAmount }: CurrencyInputProps) {
+function CurrencyInput() {
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [sourceCurrency, setSourceCurrency] = useState<string>('');
   const [targetCurrency, setTargetCurrency] = useState<string>('');
   const [amount, setAmount] = useState<number>(0);
+  const [convertedAmount, setConvertedAmount] = useState<number | null>(null);
 
   useEffect(() => {
     CurrencyService.getCurrencies()
@@ -48,40 +50,45 @@ function CurrencyInput({ setConvertedAmount }: CurrencyInputProps) {
     >
       <Card sx={{ minWidth: 300, p: 2 }}>
         <CardContent>
-          <h2>Currency Input</h2>
-          <FormControl sx={{ width: '100%', mb: 2 }}>
-            <InputLabel>Source Currency</InputLabel>
-            <Select
-              value={sourceCurrency}
-              onChange={(e) => setSourceCurrency(e.target.value as string)}
-            >
-              {currencies.map(currency => (
-                <MenuItem key={currency.code} value={currency.code}>
-                  {currency.code}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ width: '100%', mb: 2 }}>
-            <InputLabel>Target Currency</InputLabel>
-            <Select
-              value={targetCurrency}
-              onChange={(e) => setTargetCurrency(e.target.value as string)}
-            >
-              {currencies.map(currency => (
-                <MenuItem key={currency.code} value={currency.code}>
-                  {currency.code}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextField
-            label="Amount"
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
-            sx={{ width: '100%', mb: 2 }}
-          />
+          <h2>Currency Converter</h2>
+          <Box display="flex" justifyContent="space-between" mb={2}>
+            <FormControl sx={{ flex: 1, mr: 2 }}>
+              <InputLabel>Source Currency</InputLabel>
+              <Select
+                value={sourceCurrency}
+                onChange={(e) => setSourceCurrency(e.target.value as string)}
+              >
+                {currencies.map(currency => (
+                  <MenuItem key={currency.code} value={currency.code}>
+                    {currency.code}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <TextField
+              label="Amount"
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              sx={{ flex: 1 }}
+            />
+          </Box>
+          <Box display="flex" justifyContent="space-between" mb={2}>
+            <FormControl sx={{ flex: 1, mr: 2 }}>
+              <InputLabel>Target Currency</InputLabel>
+              <Select
+                value={targetCurrency}
+                onChange={(e) => setTargetCurrency(e.target.value as string)}
+              >
+                {currencies.map(currency => (
+                  <MenuItem key={currency.code} value={currency.code}>
+                    {currency.code}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <ConversionResult convertedAmount={convertedAmount}/>
+          </Box>
           <Button
             variant="contained"
             color="primary"
