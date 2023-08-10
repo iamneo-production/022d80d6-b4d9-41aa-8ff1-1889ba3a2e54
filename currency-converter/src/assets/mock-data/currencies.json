@@ -1,0 +1,50 @@
+{
+  "currencies": [
+    {"code": "USD", "name": "US Dollar"},
+    {"code": "EUR", "name": "Euro"},
+    {"code": "GBP", "name": "British Pound"},
+    {"code": "JPY", "name": "Japanese Yen"},
+    {"code": "AUD", "name": "Australian Dollar"},
+    {"code": "CAD", "name": "Canadian Dollar"},
+    {"code": "CHF", "name": "Swiss Franc"}
+  ],
+  "exchangeRates": {
+    "USD": {
+      "EUR": 0.85,
+      "GBP": 0.72,
+      "JPY": 110.43,
+      "AUD": 1.38,
+      "CAD": 1.25,
+      "CHF": 0.92
+    },
+    "EUR": {
+      "USD": 1.18,
+      "GBP": 0.89,
+      "JPY": 128.74,
+      "AUD": 1.62,
+      "CAD": 1.48,
+      "CHF": 1.10
+    }
+  },
+  "conversionHistory": [
+    {
+      "id": 1,
+      "timestamp": "2023-08-10T14:30:00Z",
+      "sourceCurrency": "USD",
+      "targetCurrency": "EUR",
+      "sourceAmount": 100,
+      "convertedAmount": 85
+    },
+    {
+      "id": 2,
+      "timestamp": "2023-08-11T10:15:00Z",
+      "sourceCurrency": "EUR",
+      "targetCurrency": "JPY",
+      "sourceAmount": 200,
+      "convertedAmount": 25748
+    }
+  ],
+  "ratesUpdateStatus": {
+    "lastUpdated": "2023-08-10T12:00:00Z"
+  }
+}
