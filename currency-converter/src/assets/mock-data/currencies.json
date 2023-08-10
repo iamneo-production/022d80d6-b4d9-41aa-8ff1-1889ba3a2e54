@@ -1,0 +1,34 @@
+{
+  "exchangeRates": {
+    "USD": {
+      "EUR": 0.85,
+      "GBP": 0.72,
+      "JPY": 110.2,
+    },
+    "EUR": {
+      "USD": 1.18,
+      "GBP": 0.88,
+      "JPY": 128.5,
+    },
+    "GBP": {
+      "USD": 1.39,
+      "EUR": 1.14,
+      "JPY": 150.9,
+    },
+  },
+  "conversionHistory": [
+    {
+      "id": 1,
+      "timestamp": "2023-08-10T14:30:00Z",
+      "sourceCurrency": "USD",
+      "targetCurrency": "EUR",
+      "sourceAmount": 100,
+      "convertedAmount": 85
+    },
+  ],
+  "ratesUpdateStatus": {
+    "lastUpdated": "2023-08-10T12:00:00Z",
+    "nextUpdate": "2023-08-11T12:00:00Z",
+    "status": "success"
+  }
+}
