@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:8000"
+const baseURL = "https://ide-cdccbbbcebfdafbfacaacbdbbcffbcddcfcbbceff.project.examly.io/proxy/8080"
 
 export default axios.create({
     baseURL:baseURL,
