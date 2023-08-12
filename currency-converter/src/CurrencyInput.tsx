@@ -74,7 +74,7 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
     }
   };
   const updateExchangeRates = () => {
-    CurrencyService.updateExchangeRates('USD')
+    CurrencyService.updateExchangeRates()
       .then(() => {
         console.log('Exchange rates updated successfully.');
       })
@@ -137,7 +137,7 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
           variant="contained"
           color="primary"
           onClick={updateExchangeRates}
-          sx={{ width: '100%' }}
+          sx={{ marginTop:1, width: '100%' }}
         >
           Update Exchange Rates
         </Button>

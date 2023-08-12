@@ -9,6 +9,11 @@ interface ConversionHistory {
   convertedAmount: number;
 }
 
+interface Currency {
+  code: string;
+  name: string;
+}
+
 interface ExchangeRates {
   [baseCurrency: string]: { [targetCurrency: string]: number };
 }
@@ -44,44 +49,27 @@ class CurrencyService {
   addConversionHistory(historyData: ConversionHistory) {
     return http.post('/conversionHistory', historyData);
   }
-  updateExchangeRates(baseCurrency: string) {
-    return http.get(`https://api.frankfurter.app/latest?from=${baseCurrency}`)
-      .then(response => {
-        const rates = response.data.rates;
-
-        const updatedExchangeRates: ExchangeRates = {
-          [baseCurrency]: { ...rates }
-        };
-
-        return http.post('/exchangeRates', updatedExchangeRates);
-      })
-      .catch(error => {
-        console.error('Error updating exchange rates:', error);
-        return Promise.reject(error);
-      });
+  getExchangeRatesExternal(baseCurrency: string) {
+    return http.get(`https://api.frankfurter.app/latest?from=${baseCurrency}`);
   }
-  updateCurrencies() {
-    return http.get('https://api.frankfurter.app/currencies')
-      .then(response => {
-        const currenciesData = response.data;
-        const currencyPairs = [];
+  async updateExchangeRates() {
+    try {
+      const response = await this.getCurrencies();
+      const currencies: Currency[] = response.data;
+      const updateData: ExchangeRates = {};
 
-        for (const code in currenciesData) {
-          if (currenciesData.hasOwnProperty(code)) {
-            const name = currenciesData[code];
-            currencyPairs.push({ code, name });
-          }
-        }
-        console.log(JSON.stringify(currencyPairs))
-        //gives 500 error for some reason
-        return http.post('/currencies', currencyPairs);
-      })
-      .catch(error => {
-        console.error('Error updating currencies:', error);
-        return Promise.reject(error);
-      });
+      for (const sourceCurrency of currencies) {
+        const ratesResponse = await this.getExchangeRatesExternal(sourceCurrency.code);
+        const exchangeRates = ratesResponse.data.rates;
+        updateData[sourceCurrency.code] = exchangeRates;
+      }
+
+      await http.put('/exchangeRates', updateData);
+    } catch (error) {
+      console.error('Error updating exchange rates:', error);
+      return Promise.reject(error);
+    }
   }
-
 }
 
 const newCurrencyService = new CurrencyService();
