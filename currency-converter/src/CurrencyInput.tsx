@@ -8,6 +8,15 @@ interface Currency {
   name: string;
 }
 
+interface ConversionHistory {
+  id: number;
+  timestamp: string;
+  sourceCurrency: string;
+  targetCurrency: string;
+  sourceAmount: number;
+  convertedAmount: number;
+}
+
 function CurrencyInput() {
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [sourceCurrency, setSourceCurrency] = useState<string>('');
@@ -30,6 +39,21 @@ function CurrencyInput() {
       CurrencyService.performConversion(amount, sourceCurrency, targetCurrency)
         .then(response => {
           setConvertedAmount(response.data.convertedAmount);
+          const historyData = {
+            timestamp: new Date().toISOString(),
+            sourceCurrency,
+            targetCurrency,
+            sourceAmount: amount,
+            convertedAmount: response.data.convertedAmount,
+          } as ConversionHistory;
+
+          CurrencyService.addConversionHistory(historyData)
+            .then(() => {
+              console.log('Conversion history added successfully.');
+            })
+            .catch(error => {
+              console.error('Error adding conversion history:', error);
+            });
         })
         .catch(error => {
           console.error('Error performing conversion:', error);

@@ -1,12 +1,33 @@
 {
   "currencies": [
-    {"code": "USD", "name": "US Dollar"},
-    {"code": "EUR", "name": "Euro"},
-    {"code": "GBP", "name": "British Pound"},
-    {"code": "JPY", "name": "Japanese Yen"},
-    {"code": "AUD", "name": "Australian Dollar"},
-    {"code": "CAD", "name": "Canadian Dollar"},
-    {"code": "CHF", "name": "Swiss Franc"}
+    {
+      "code": "USD",
+      "name": "US Dollar"
+    },
+    {
+      "code": "EUR",
+      "name": "Euro"
+    },
+    {
+      "code": "GBP",
+      "name": "British Pound"
+    },
+    {
+      "code": "JPY",
+      "name": "Japanese Yen"
+    },
+    {
+      "code": "AUD",
+      "name": "Australian Dollar"
+    },
+    {
+      "code": "CAD",
+      "name": "Canadian Dollar"
+    },
+    {
+      "code": "CHF",
+      "name": "Swiss Franc"
+    }
   ],
   "exchangeRates": {
     "USD": {
@@ -23,7 +44,7 @@
       "JPY": 128.74,
       "AUD": 1.62,
       "CAD": 1.48,
-      "CHF": 1.10
+      "CHF": 1.1
     }
   },
   "conversionHistory": [
@@ -42,6 +63,22 @@
       "targetCurrency": "JPY",
       "sourceAmount": 200,
       "convertedAmount": 25748
+    },
+    {
+      "timestamp": "2023-08-12T13:37:55.784Z",
+      "sourceCurrency": "USD",
+      "targetCurrency": "GBP",
+      "sourceAmount": 2000,
+      "convertedAmount": 1440,
+      "id": 3
+    },
+    {
+      "timestamp": "2023-08-12T13:38:50.880Z",
+      "sourceCurrency": "EUR",
+      "targetCurrency": "USD",
+      "sourceAmount": 50,
+      "convertedAmount": 59,
+      "id": 4
     }
   ],
   "ratesUpdateStatus": {
