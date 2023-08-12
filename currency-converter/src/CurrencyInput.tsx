@@ -8,10 +8,6 @@ interface Currency {
   name: string;
 }
 
-interface CurrencyInputProps {
-  setConvertedAmount: (amount: number | null) => void;
-}
-
 function CurrencyInput() {
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [sourceCurrency, setSourceCurrency] = useState<string>('');
@@ -42,64 +38,57 @@ function CurrencyInput() {
   };
 
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      minHeight="100vh"
-    >
-      <Card sx={{ minWidth: 300, p: 2 }}>
-        <CardContent>
-          <h2>Currency Converter</h2>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <FormControl sx={{ flex: 1, mr: 2 }}>
-              <InputLabel>Source Currency</InputLabel>
-              <Select
-                value={sourceCurrency}
-                onChange={(e) => setSourceCurrency(e.target.value as string)}
-              >
-                {currencies.map(currency => (
-                  <MenuItem key={currency.code} value={currency.code}>
-                    {currency.code}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              label="Amount"
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-              sx={{ flex: 1 }}
-            />
-          </Box>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <FormControl sx={{ flex: 1, mr: 2 }}>
-              <InputLabel>Target Currency</InputLabel>
-              <Select
-                value={targetCurrency}
-                onChange={(e) => setTargetCurrency(e.target.value as string)}
-              >
-                {currencies.map(currency => (
-                  <MenuItem key={currency.code} value={currency.code}>
-                    {currency.code}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <ConversionResult convertedAmount={convertedAmount}/>
-          </Box>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleConvert}
-            sx={{ width: '100%' }}
-          >
-            Convert
-          </Button>
-        </CardContent>
-      </Card>
-    </Box>
+    <Card sx={{ minWidth: 300, p: 2 }}>
+      <CardContent>
+        <h2>Currency Converter</h2>
+        <Box display="flex" justifyContent="space-between" mb={2}>
+          <FormControl sx={{ flex: 1, mr: 2 }}>
+            <InputLabel>Source Currency</InputLabel>
+            <Select
+              value={sourceCurrency}
+              onChange={(e) => setSourceCurrency(e.target.value as string)}
+            >
+              {currencies.map(currency => (
+                <MenuItem key={currency.code} value={currency.code}>
+                  {currency.code}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField
+            label="Amount"
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value))}
+            sx={{ flex: 1 }}
+          />
+        </Box>
+        <Box display="flex" justifyContent="space-between" mb={2}>
+          <FormControl sx={{ flex: 1, mr: 2 }}>
+            <InputLabel>Target Currency</InputLabel>
+            <Select
+              value={targetCurrency}
+              onChange={(e) => setTargetCurrency(e.target.value as string)}
+            >
+              {currencies.map(currency => (
+                <MenuItem key={currency.code} value={currency.code}>
+                  {currency.code}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <ConversionResult convertedAmount={convertedAmount} />
+        </Box>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleConvert}
+          sx={{ width: '100%' }}
+        >
+          Convert
+        </Button>
+      </CardContent>
+    </Card>
   );
 }
 
