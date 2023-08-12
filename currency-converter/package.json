@@ -22,7 +22,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"npx json-server --watch ./src/assets/mock-data/currencies.json --port 8080\" \"PORT=8081 react-scripts start\"",
+    "start:json-server": "json-server --watch ./src/assets/mock-data/currencies.json --port 8080",
+    "start:react-app": "PORT=8081 react-scripts start",
+    "start": "npm run start:json-server & npm run start:react-app",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject"
