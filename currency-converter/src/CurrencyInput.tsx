@@ -8,11 +8,22 @@ interface Currency {
   name: string;
 }
 
-interface CurrencyInputProps {
-  setConvertedAmount: (amount: number | null) => void;
+interface ConversionHistoryItem {
+  id: number;
+  timestamp: string;
+  sourceCurrency: string;
+  targetCurrency: string;
+  sourceAmount: number;
+  convertedAmount: number;
 }
 
-function CurrencyInput() {
+
+interface ConversionHistoryProps {
+  setConversionHistory: React.Dispatch<React.SetStateAction<ConversionHistoryItem[]>>;
+}
+
+
+function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [sourceCurrency, setSourceCurrency] = useState<string>('');
   const [targetCurrency, setTargetCurrency] = useState<string>('');
@@ -34,72 +45,104 @@ function CurrencyInput() {
       CurrencyService.performConversion(amount, sourceCurrency, targetCurrency)
         .then(response => {
           setConvertedAmount(response.data.convertedAmount);
+          const historyData = {
+            timestamp: new Date().toISOString(),
+            sourceCurrency,
+            targetCurrency,
+            sourceAmount: amount,
+            convertedAmount: response.data.convertedAmount,
+          } as ConversionHistoryItem;
+
+          CurrencyService.addConversionHistory(historyData)
+            .then(() => {
+              console.log('Conversion history added successfully.');
+              CurrencyService.getConversionHistory()
+                .then(response => {
+                  setConversionHistory(response.data.reverse());
+                })
+                .catch(error => {
+                  console.error('Error fetching conversion history:', error);
+                });
+            })
+            .catch(error => {
+              console.error('Error adding conversion history:', error);
+            });
         })
         .catch(error => {
           console.error('Error performing conversion:', error);
         });
     }
   };
+  const updateExchangeRates = () => {
+    CurrencyService.updateExchangeRates('USD')
+      .then(() => {
+        console.log('Exchange rates updated successfully.');
+      })
+      .catch(error => {
+        console.error('Error updating Exchange rates:', error);
+      });
+  };
 
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      minHeight="100vh"
-    >
-      <Card sx={{ minWidth: 300, p: 2 }}>
-        <CardContent>
-          <h2>Currency Converter</h2>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <FormControl sx={{ flex: 1, mr: 2 }}>
-              <InputLabel>Source Currency</InputLabel>
-              <Select
-                value={sourceCurrency}
-                onChange={(e) => setSourceCurrency(e.target.value as string)}
-              >
-                {currencies.map(currency => (
-                  <MenuItem key={currency.code} value={currency.code}>
-                    {currency.code}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              label="Amount"
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-              sx={{ flex: 1 }}
-            />
-          </Box>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <FormControl sx={{ flex: 1, mr: 2 }}>
-              <InputLabel>Target Currency</InputLabel>
-              <Select
-                value={targetCurrency}
-                onChange={(e) => setTargetCurrency(e.target.value as string)}
-              >
-                {currencies.map(currency => (
-                  <MenuItem key={currency.code} value={currency.code}>
-                    {currency.code}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <ConversionResult convertedAmount={convertedAmount}/>
-          </Box>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleConvert}
-            sx={{ width: '100%' }}
-          >
-            Convert
-          </Button>
-        </CardContent>
-      </Card>
-    </Box>
+    <Card sx={{ minWidth: 300, p: 2 }}>
+      <CardContent>
+        <h2>Currency Converter</h2>
+        <Box display="flex" justifyContent="space-between" mb={2}>
+          <FormControl sx={{ flex: 1, mr: 2 }}>
+            <InputLabel>Source Currency</InputLabel>
+            <Select
+              value={sourceCurrency}
+              onChange={(e) => setSourceCurrency(e.target.value as string)}
+            >
+              {currencies.map(currency => (
+                <MenuItem key={currency.code} value={currency.code}>
+                  {currency.code}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField
+            label="Amount"
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value))}
+            sx={{ flex: 1 }}
+          />
+        </Box>
+        <Box display="flex" justifyContent="space-between" mb={2}>
+          <FormControl sx={{ flex: 1, mr: 2 }}>
+            <InputLabel>Target Currency</InputLabel>
+            <Select
+              value={targetCurrency}
+              onChange={(e) => setTargetCurrency(e.target.value as string)}
+            >
+              {currencies.map(currency => (
+                <MenuItem key={currency.code} value={currency.code}>
+                  {currency.code}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <ConversionResult convertedAmount={convertedAmount} />
+        </Box>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleConvert}
+          sx={{ width: '100%' }}
+        >
+          Convert
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={updateExchangeRates}
+          sx={{ width: '100%' }}
+        >
+          Update Exchange Rates
+        </Button>
+      </CardContent>
+    </Card>
   );
 }
 

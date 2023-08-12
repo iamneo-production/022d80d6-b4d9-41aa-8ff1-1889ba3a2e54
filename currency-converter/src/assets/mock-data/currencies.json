@@ -1,29 +1,162 @@
 {
   "currencies": [
-    {"code": "USD", "name": "US Dollar"},
-    {"code": "EUR", "name": "Euro"},
-    {"code": "GBP", "name": "British Pound"},
-    {"code": "JPY", "name": "Japanese Yen"},
-    {"code": "AUD", "name": "Australian Dollar"},
-    {"code": "CAD", "name": "Canadian Dollar"},
-    {"code": "CHF", "name": "Swiss Franc"}
+    {
+      "code": "AUD",
+      "name": "Australian Dollar"
+    },
+    {
+      "code": "BGN",
+      "name": "Bulgarian Lev"
+    },
+    {
+      "code": "BRL",
+      "name": "Brazilian Real"
+    },
+    {
+      "code": "CAD",
+      "name": "Canadian Dollar"
+    },
+    {
+      "code": "CHF",
+      "name": "Swiss Franc"
+    },
+    {
+      "code": "CNY",
+      "name": "Chinese Renminbi Yuan"
+    },
+    {
+      "code": "CZK",
+      "name": "Czech Koruna"
+    },
+    {
+      "code": "DKK",
+      "name": "Danish Krone"
+    },
+    {
+      "code": "EUR",
+      "name": "Euro"
+    },
+    {
+      "code": "GBP",
+      "name": "British Pound"
+    },
+    {
+      "code": "HKD",
+      "name": "Hong Kong Dollar"
+    },
+    {
+      "code": "HUF",
+      "name": "Hungarian Forint"
+    },
+    {
+      "code": "IDR",
+      "name": "Indonesian Rupiah"
+    },
+    {
+      "code": "ILS",
+      "name": "Israeli New Sheqel"
+    },
+    {
+      "code": "INR",
+      "name": "Indian Rupee"
+    },
+    {
+      "code": "ISK",
+      "name": "Icelandic Króna"
+    },
+    {
+      "code": "JPY",
+      "name": "Japanese Yen"
+    },
+    {
+      "code": "KRW",
+      "name": "South Korean Won"
+    },
+    {
+      "code": "MXN",
+      "name": "Mexican Peso"
+    },
+    {
+      "code": "MYR",
+      "name": "Malaysian Ringgit"
+    },
+    {
+      "code": "NOK",
+      "name": "Norwegian Krone"
+    },
+    {
+      "code": "NZD",
+      "name": "New Zealand Dollar"
+    },
+    {
+      "code": "PHP",
+      "name": "Philippine Peso"
+    },
+    {
+      "code": "PLN",
+      "name": "Polish Złoty"
+    },
+    {
+      "code": "RON",
+      "name": "Romanian Leu"
+    },
+    {
+      "code": "SEK",
+      "name": "Swedish Krona"
+    },
+    {
+      "code": "SGD",
+      "name": "Singapore Dollar"
+    },
+    {
+      "code": "THB",
+      "name": "Thai Baht"
+    },
+    {
+      "code": "TRY",
+      "name": "Turkish Lira"
+    },
+    {
+      "code": "USD",
+      "name": "United States Dollar"
+    },
+    {
+      "code": "ZAR",
+      "name": "South African Rand"
+    }
   ],
   "exchangeRates": {
     "USD": {
-      "EUR": 0.85,
-      "GBP": 0.72,
-      "JPY": 110.43,
-      "AUD": 1.38,
-      "CAD": 1.25,
-      "CHF": 0.92
-    },
-    "EUR": {
-      "USD": 1.18,
-      "GBP": 0.89,
-      "JPY": 128.74,
-      "AUD": 1.62,
-      "CAD": 1.48,
-      "CHF": 1.10
+      "AUD": 1.5313,
+      "BGN": 1.7774,
+      "BRL": 4.876,
+      "CAD": 1.3441,
+      "CHF": 0.87395,
+      "CNY": 7.2323,
+      "CZK": 21.904,
+      "DKK": 6.7712,
+      "EUR": 0.90876,
+      "GBP": 0.78531,
+      "HKD": 7.816,
+      "HUF": 347.87,
+      "IDR": 15278,
+      "ILS": 3.7254,
+      "INR": 82.79,
+      "ISK": 131.5,
+      "JPY": 144.47,
+      "KRW": 1326.16,
+      "MXN": 17.0022,
+      "MYR": 4.587,
+      "NOK": 10.3803,
+      "NZD": 1.6629,
+      "PHP": 56.502,
+      "PLN": 4.032,
+      "RON": 4.4899,
+      "SEK": 10.7302,
+      "SGD": 1.3495,
+      "THB": 35.03,
+      "TRY": 27.047,
+      "ZAR": 18.8241
     }
   },
   "conversionHistory": [
@@ -42,9 +175,46 @@
       "targetCurrency": "JPY",
       "sourceAmount": 200,
       "convertedAmount": 25748
+    },
+    {
+      "timestamp": "2023-08-12T13:37:55.784Z",
+      "sourceCurrency": "USD",
+      "targetCurrency": "GBP",
+      "sourceAmount": 2000,
+      "convertedAmount": 1440,
+      "id": 3
+    },
+    {
+      "timestamp": "2023-08-12T13:38:50.880Z",
+      "sourceCurrency": "EUR",
+      "targetCurrency": "USD",
+      "sourceAmount": 50,
+      "convertedAmount": 59,
+      "id": 4
+    },
+    {
+      "timestamp": "2023-08-12T13:54:15.401Z",
+      "sourceCurrency": "EUR",
+      "targetCurrency": "GBP",
+      "sourceAmount": 1210,
+      "convertedAmount": 1076.9,
+      "id": 5
+    },
+    {
+      "timestamp": "2023-08-12T17:12:02.796Z",
+      "sourceCurrency": "USD",
+      "targetCurrency": "GBP",
+      "sourceAmount": 1200,
+      "convertedAmount": 864,
+      "id": 6
+    },
+    {
+      "timestamp": "2023-08-12T17:13:45.298Z",
+      "sourceCurrency": "USD",
+      "targetCurrency": "JPY",
+      "sourceAmount": 500,
+      "convertedAmount": 55215,
+      "id": 7
     }
-  ],
-  "ratesUpdateStatus": {
-    "lastUpdated": "2023-08-10T12:00:00Z"
-  }
+  ]
 }

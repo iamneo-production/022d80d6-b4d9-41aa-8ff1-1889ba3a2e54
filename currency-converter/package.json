@@ -1,4 +1,4 @@
-{   
+{
   "name": "currency-converter",
   "version": "0.1.0",
   "private": true,
@@ -22,9 +22,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"npx json-server --watch ./src/assets/mock-data/currencies.json --port 8080\" \"PORT=8081 react-scripts start\"",
+    "start:json-server": "json-server --watch ./src/assets/mock-data/currencies.json --port 8080",
+    "start:react-app": "PORT=8081 react-scripts start",
+    "start": "npm run start:json-server & npm run start:react-app",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,5 +46,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
+    "axios-mock-adapter": "^1.21.5",
+    "babel-jest": "^29.6.2"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   }
 }
