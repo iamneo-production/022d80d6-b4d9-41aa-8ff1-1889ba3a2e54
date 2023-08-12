@@ -13,15 +13,6 @@ interface ExchangeRates {
   [baseCurrency: string]: { [targetCurrency: string]: number };
 }
 
-interface Currency {
-  code: string;
-  name: string;
-}
-
-interface CurrenciesData {
-  currencies: Currency[];
-}
-
 class CurrencyService {
   getCurrencies() {
     return http.get('/currencies');
@@ -93,4 +84,6 @@ class CurrencyService {
 
 }
 
-export default new CurrencyService();
+const newCurrencyService = new CurrencyService();
+
+export default newCurrencyService;
