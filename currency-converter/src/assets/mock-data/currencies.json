@@ -87,6 +87,22 @@
       "sourceAmount": 1210,
       "convertedAmount": 1076.9,
       "id": 5
+    },
+    {
+      "timestamp": "2023-08-12T17:12:02.796Z",
+      "sourceCurrency": "USD",
+      "targetCurrency": "GBP",
+      "sourceAmount": 1200,
+      "convertedAmount": 864,
+      "id": 6
+    },
+    {
+      "timestamp": "2023-08-12T17:13:45.298Z",
+      "sourceCurrency": "USD",
+      "targetCurrency": "JPY",
+      "sourceAmount": 500,
+      "convertedAmount": 55215,
+      "id": 7
     }
   ],
   "ratesUpdateStatus": {

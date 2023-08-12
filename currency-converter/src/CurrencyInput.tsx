@@ -8,7 +8,7 @@ interface Currency {
   name: string;
 }
 
-interface ConversionHistory {
+interface ConversionHistoryItem {
   id: number;
   timestamp: string;
   sourceCurrency: string;
@@ -17,7 +17,13 @@ interface ConversionHistory {
   convertedAmount: number;
 }
 
-function CurrencyInput() {
+
+interface ConversionHistoryProps {
+  setConversionHistory: React.Dispatch<React.SetStateAction<ConversionHistoryItem[]>>;
+}
+
+
+function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [sourceCurrency, setSourceCurrency] = useState<string>('');
   const [targetCurrency, setTargetCurrency] = useState<string>('');
@@ -45,11 +51,18 @@ function CurrencyInput() {
             targetCurrency,
             sourceAmount: amount,
             convertedAmount: response.data.convertedAmount,
-          } as ConversionHistory;
+          } as ConversionHistoryItem;
 
           CurrencyService.addConversionHistory(historyData)
             .then(() => {
               console.log('Conversion history added successfully.');
+              CurrencyService.getConversionHistory()
+                .then(response => {
+                  setConversionHistory(response.data.reverse());
+                })
+                .catch(error => {
+                  console.error('Error fetching conversion history:', error);
+                });
             })
             .catch(error => {
               console.error('Error adding conversion history:', error);

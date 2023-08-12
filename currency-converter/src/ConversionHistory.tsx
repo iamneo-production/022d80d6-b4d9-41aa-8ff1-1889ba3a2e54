@@ -10,19 +10,11 @@ interface ConversionHistoryItem {
   sourceAmount: number;
   convertedAmount: number;
 }
+interface ConversionHistoryProps {
+  conversionHistory: ConversionHistoryItem[];
+}
 
-function ConversionHistory() {
-  const [conversionHistory, setConversionHistory] = useState<ConversionHistoryItem[]>([]);
-
-  useEffect(() => {
-    CurrencyService.getConversionHistory()
-      .then(response => {
-        setConversionHistory(response.data.reverse());
-      })
-      .catch(error => {
-        console.error('Error fetching conversion history:', error);
-      });
-  }, []);
+function ConversionHistory({ conversionHistory }: ConversionHistoryProps) {
 
   return (
     <Card sx={{ minWidth: 300, p: 2 }}>
