@@ -73,6 +73,15 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
         });
     }
   };
+  const updateExchangeRates = () => {
+    CurrencyService.updateExchangeRates('USD')
+      .then(() => {
+        console.log('Exchange rates updated successfully.');
+      })
+      .catch(error => {
+        console.error('Error updating Exchange rates:', error);
+      });
+  };
 
   return (
     <Card sx={{ minWidth: 300, p: 2 }}>
@@ -123,6 +132,14 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
           sx={{ width: '100%' }}
         >
           Convert
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={updateExchangeRates}
+          sx={{ width: '100%' }}
+        >
+          Update Exchange Rates
         </Button>
       </CardContent>
     </Card>

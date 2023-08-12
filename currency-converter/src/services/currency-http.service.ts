@@ -9,6 +9,19 @@ interface ConversionHistory {
   convertedAmount: number;
 }
 
+interface ExchangeRates {
+  [baseCurrency: string]: { [targetCurrency: string]: number };
+}
+
+interface Currency {
+  code: string;
+  name: string;
+}
+
+interface CurrenciesData {
+  currencies: Currency[];
+}
+
 class CurrencyService {
   getCurrencies() {
     return http.get('/currencies');
@@ -40,9 +53,44 @@ class CurrencyService {
   addConversionHistory(historyData: ConversionHistory) {
     return http.post('/conversionHistory', historyData);
   }
-  updateExchangeRates() {
-    return http.post('/rates-update');
+  updateExchangeRates(baseCurrency: string) {
+    return http.get(`https://api.frankfurter.app/latest?from=${baseCurrency}`)
+      .then(response => {
+        const rates = response.data.rates;
+
+        const updatedExchangeRates: ExchangeRates = {
+          [baseCurrency]: { ...rates }
+        };
+
+        return http.post('/exchangeRates', updatedExchangeRates);
+      })
+      .catch(error => {
+        console.error('Error updating exchange rates:', error);
+        return Promise.reject(error);
+      });
   }
+  updateCurrencies() {
+    return http.get('https://api.frankfurter.app/currencies')
+      .then(response => {
+        const currenciesData = response.data;
+        const currencyPairs = [];
+
+        for (const code in currenciesData) {
+          if (currenciesData.hasOwnProperty(code)) {
+            const name = currenciesData[code];
+            currencyPairs.push({ code, name });
+          }
+        }
+        console.log(JSON.stringify(currencyPairs))
+        //gives 500 error for some reason
+        return http.post('/currencies', currencyPairs);
+      })
+      .catch(error => {
+        console.error('Error updating currencies:', error);
+        return Promise.reject(error);
+      });
+  }
+
 }
 
 export default new CurrencyService();
