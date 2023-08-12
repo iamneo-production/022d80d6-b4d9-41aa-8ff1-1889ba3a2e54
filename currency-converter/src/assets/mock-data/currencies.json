@@ -79,6 +79,14 @@
       "sourceAmount": 50,
       "convertedAmount": 59,
       "id": 4
+    },
+    {
+      "timestamp": "2023-08-12T13:54:15.401Z",
+      "sourceCurrency": "EUR",
+      "targetCurrency": "GBP",
+      "sourceAmount": 1210,
+      "convertedAmount": 1076.9,
+      "id": 5
     }
   ],
   "ratesUpdateStatus": {

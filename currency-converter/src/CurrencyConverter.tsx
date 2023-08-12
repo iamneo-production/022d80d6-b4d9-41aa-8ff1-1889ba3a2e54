@@ -22,6 +22,7 @@ function CurrencyConverter() {
       style={containerStyles}
     >
       <CurrencyInput />
+      <div style={{padding:20}}></div>
       <ConversionHistory/>
     </Box>
   );
