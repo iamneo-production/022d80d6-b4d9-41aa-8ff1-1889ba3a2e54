@@ -40,30 +40,3 @@ const styles: Styles = {
 };
 
 export default ErrorScreen;
-
-// CSS keyframes converted to TypeScript
-declare module 'react' {
-  interface CSSProperties {
-    animation?: string;
-  }
-}
-
-// Define the CSS keyframes
-const rainbowKeyframes = `
-  @keyframes rainbow {
-    0% { color: red; }
-    14% { color: orange; }
-    28% { color: yellow; }
-    42% { color: green; }
-    57% { color: blue; }
-    71% { color: indigo; }
-    85% { color: violet; }
-    100% { color: red; }
-  }
-`;
-
-// Add the keyframes to a <style> element in the document head
-const style = document.createElement('style');
-style.type = 'text/css';
-style.innerHTML = rainbowKeyframes;
-document.head.appendChild(style);
