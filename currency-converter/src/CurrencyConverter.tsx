@@ -10,6 +10,7 @@ import ConversionHistory from './ConversionHistory';
 import CurrencyService from './services/currency-http.service';
 import AuthService from './services/auth.service';
 import LoginDialog from './LoginDialog';
+import ErrorDialog from './ErrorDialog';
 
 interface ConversionHistoryItem {
   id: number;
@@ -43,6 +44,9 @@ function CurrencyConverter() {
   const [conversionHistory, setConversionHistory] = useState<ConversionHistoryItem[]>([]);
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const openLoginDialog = () => {
     setLoginDialogOpen(true);
   };
@@ -61,6 +65,8 @@ function CurrencyConverter() {
           setConversionHistory(response.data.reverse());
         })
         .catch(error => {
+          setErrorMessage('Error fetching conversion history. Please try again.');
+          setErrorDialogOpen(true);
           console.error('Error fetching conversion history:', error);
         });
     }
@@ -83,6 +89,11 @@ function CurrencyConverter() {
         </Button>
       )}
       <LoginDialog open={loginDialogOpen} onClose={closeLoginDialog} onLogin={handleLogin} />
+      <ErrorDialog
+        open={errorDialogOpen}
+        onClose={() => setErrorDialogOpen(false)}
+        errorMessage={errorMessage}
+      />
     </Box>
   );
 }

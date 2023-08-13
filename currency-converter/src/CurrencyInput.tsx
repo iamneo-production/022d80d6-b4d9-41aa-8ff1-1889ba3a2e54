@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Card, CardContent, Box } from '@mui/material';
 import CurrencyService from './services/currency-http.service';
 import ConversionResult from './ConversionResult';
+import ErrorDialog from './ErrorDialog';
 
 interface Currency {
   code: string;
@@ -28,12 +29,17 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
   const [amount, setAmount] = useState<number>(0);
   const [convertedAmount, setConvertedAmount] = useState<number | null>(null);
 
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     CurrencyService.getCurrencies()
       .then(response => {
         setCurrencies(response.data);
       })
       .catch(error => {
+        setErrorMessage('Error fetching currencies. Please try again.');
+        setErrorDialogOpen(true);
         console.error('Error fetching currencies:', error);
       });
   }, []);
@@ -59,14 +65,20 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
                   setConversionHistory(response.data.reverse());
                 })
                 .catch(error => {
+                  setErrorMessage('Error fetching conversion history. Please try again.');
+                  setErrorDialogOpen(true);
                   console.error('Error fetching conversion history:', error);
                 });
             })
             .catch(error => {
+              setErrorMessage('Error adding conversion history. Please try again.');
+              setErrorDialogOpen(true);
               console.error('Error adding conversion history:', error);
             });
         })
         .catch(error => {
+          setErrorMessage('Error performing conversion. Please try again.');
+          setErrorDialogOpen(true);
           console.error('Error performing conversion:', error);
         });
     }
@@ -78,6 +90,8 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
         console.log('Exchange rates updated successfully.');
       })
       .catch(error => {
+        setErrorMessage('Error updating Exchange rates. Please try again.');
+        setErrorDialogOpen(true);
         console.error('Error updating Exchange rates:', error);
       });
   };
@@ -144,6 +158,11 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
           Update Exchange Rates
         </Button>
       </CardContent>
+      <ErrorDialog
+        open={errorDialogOpen}
+        onClose={() => setErrorDialogOpen(false)}
+        errorMessage={errorMessage}
+      />
     </Card>
   );
 }
