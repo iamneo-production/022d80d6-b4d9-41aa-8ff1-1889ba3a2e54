@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import CurrencyInput from './CurrencyInput';
 import ConversionHistory from './ConversionHistory';
 import CurrencyService from './services/currency-http.service';
@@ -14,20 +14,24 @@ interface ConversionHistoryItem {
 }
 
 function CurrencyConverter() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const containerStyles: React.CSSProperties = {
     display: 'flex',
+    flexDirection: isMobile ? 'column' : 'row', // Change direction for mobile
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '100vh',
     backgroundColor: '#f6f6f6',
-    background:`
-    linear-gradient(45deg, #f6f6f6 25%, transparent 25%, transparent 75%, #f6f6f6 75%),
-    linear-gradient(45deg, #f6f6f6 25%, transparent 25%, transparent 75%, #f6f6f6 75%)`,
+    background: `
+      linear-gradient(45deg, #f6f6f6 25%, transparent 25%, transparent 75%, #f6f6f6 75%),
+      linear-gradient(45deg, #f6f6f6 25%, transparent 25%, transparent 75%, #f6f6f6 75%)`,
     backgroundSize: '60px 60px',
     backgroundPosition: '0 0, 30px 30px',
+    padding: isMobile ? '20px' : '0', 
   };
 
-  
   const [conversionHistory, setConversionHistory] = useState<ConversionHistoryItem[]>([]);
   useEffect(() => {
     CurrencyService.getConversionHistory()
@@ -39,14 +43,11 @@ function CurrencyConverter() {
       });
   }, []);
 
-
   return (
-    <Box
-      style={containerStyles}
-    >
+    <Box style={containerStyles}>
       <CurrencyInput setConversionHistory={setConversionHistory} />
-      <div style={{padding:20}}></div>
-      <ConversionHistory conversionHistory={conversionHistory}/>
+      {!isMobile && <div style={{ width: '20px' }} />}
+      <ConversionHistory conversionHistory={conversionHistory} />
     </Box>
   );
 }
