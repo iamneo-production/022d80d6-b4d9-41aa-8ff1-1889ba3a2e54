@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 interface ConversionResultProps {
   convertedAmount: number | null;
@@ -11,7 +11,7 @@ function ConversionResult({ convertedAmount }: ConversionResultProps) {
       label="Converted Amount"
       type="number"
       focused={true}
-      value={convertedAmount ||''}
+      value={convertedAmount ?? ''}
       sx={{ flex: 1 }}
     />
   );

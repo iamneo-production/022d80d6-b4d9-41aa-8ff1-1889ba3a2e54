@@ -22,15 +22,16 @@ class CurrencyService {
   getCurrencies() {
     return http.get('/currencies');
   }
-  getExchangeRates(baseCurrency: string) {
-    return http.get(`/exchangeRates?base=${baseCurrency}`);
+  getExchangeRates() {
+    return http.get('/exchangeRates');
   }
   performConversion(amount: number, sourceCurrency: string, targetCurrency: string) {
-    return this.getExchangeRates(sourceCurrency)
+    return this.getExchangeRates()
       .then(response => {
         const exchangeRates = response.data;
 
-        if (exchangeRates[sourceCurrency] && exchangeRates[sourceCurrency][targetCurrency]) {
+        const rate = exchangeRates?.[sourceCurrency]?.[targetCurrency];
+        if (rate !== undefined) {
           const rate = exchangeRates[sourceCurrency][targetCurrency];
           const convertedAmount = amount * rate;
           return Promise.resolve({ data: { convertedAmount } });

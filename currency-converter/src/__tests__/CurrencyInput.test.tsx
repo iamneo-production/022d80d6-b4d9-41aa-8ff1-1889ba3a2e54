@@ -6,8 +6,5 @@ test('renders CurrencyInput component', () => {
   render(<CurrencyInput />);
 
   expect(screen.getByText('Currency Converter')).toBeInTheDocument();
-  // expect(screen.getByLabelText('Source Currency')).toBeInTheDocument();
-  // expect(screen.getByLabelText('Target Currency')).toBeInTheDocument();
-  // expect(screen.getByLabelText('Amount')).toBeInTheDocument();
   expect(screen.getByText('Convert')).toBeInTheDocument();
 });
