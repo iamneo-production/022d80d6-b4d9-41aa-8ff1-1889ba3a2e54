@@ -17,11 +17,9 @@ interface ConversionHistoryItem {
   convertedAmount: number;
 }
 
-
 interface ConversionHistoryProps {
   setConversionHistory: React.Dispatch<React.SetStateAction<ConversionHistoryItem[]>>;
 }
-
 
 function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
   const [currencies, setCurrencies] = useState<Currency[]>([]);
@@ -73,6 +71,7 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
         });
     }
   };
+
   const updateExchangeRates = () => {
     CurrencyService.updateExchangeRates()
       .then(() => {
@@ -82,54 +81,56 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
         console.error('Error updating Exchange rates:', error);
       });
   };
-
   return (
-    <Card sx={{ minWidth: 300, p: 2 }}>
+    <Card sx={{ p: 2 }}>
       <CardContent>
         <h2>Currency Converter</h2>
-        <Box display="flex" justifyContent="space-between" mb={2}>
-          <FormControl sx={{ flex: 1, mr: 2 }}>
-            <InputLabel>Source Currency</InputLabel>
-            <Select
-              value={sourceCurrency}
-              onChange={(e) => setSourceCurrency(e.target.value as string)}
-            >
-              {currencies.map(currency => (
-                <MenuItem key={currency.code} value={currency.code}>
-                  {currency.code}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextField
-            label="Amount"
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
-            sx={{ flex: 1 }}
-          />
-        </Box>
-        <Box display="flex" justifyContent="space-between" mb={2}>
-          <FormControl sx={{ flex: 1, mr: 2 }}>
-            <InputLabel>Target Currency</InputLabel>
-            <Select
-              value={targetCurrency}
-              onChange={(e) => setTargetCurrency(e.target.value as string)}
-            >
-              {currencies.map(currency => (
-                <MenuItem key={currency.code} value={currency.code}>
-                  {currency.code}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <ConversionResult convertedAmount={convertedAmount} />
+        <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={2}>
+          <Box flex={1} display="flex" flexDirection="column" mb={1} gap={{ xs: 2 }}>
+            <FormControl>
+              <InputLabel>Source Currency</InputLabel>
+              <Select
+                value={sourceCurrency}
+                onChange={(e) => setSourceCurrency(e.target.value as string)}
+              >
+                {currencies.map(currency => (
+                  <MenuItem key={currency.code} value={currency.code}>
+                    {currency.code}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl>
+              <InputLabel>Target Currency</InputLabel>
+              <Select
+                value={targetCurrency}
+                onChange={(e) => setTargetCurrency(e.target.value as string)}
+              >
+                {currencies.map(currency => (
+                  <MenuItem key={currency.code} value={currency.code}>
+                    {currency.code}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box flex={1} display="flex" flexDirection="column" mb={1} gap={{ xs: 2 }}>
+            <TextField
+              label="Amount"
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+            />
+
+            <ConversionResult convertedAmount={convertedAmount} />
+          </Box>
         </Box>
         <Button
           variant="contained"
           color="primary"
           onClick={handleConvert}
-          sx={{ width: '100%' }}
+          fullWidth
+          sx={{ mt: 1, mb: 1 }}
         >
           Convert
         </Button>
@@ -137,7 +138,8 @@ function CurrencyInput({ setConversionHistory }: ConversionHistoryProps) {
           variant="contained"
           color="primary"
           onClick={updateExchangeRates}
-          sx={{ marginTop:1, width: '100%' }}
+          fullWidth
+          sx={{ mt: 1, mb: 1 }}
         >
           Update Exchange Rates
         </Button>

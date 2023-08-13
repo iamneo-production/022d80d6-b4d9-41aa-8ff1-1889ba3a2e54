@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Card, CardContent } from '@mui/material';
+import { Card, CardContent, Typography, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
 interface ConversionHistoryItem {
   id: number;
@@ -9,17 +9,49 @@ interface ConversionHistoryItem {
   sourceAmount: number;
   convertedAmount: number;
 }
+
 interface ConversionHistoryProps {
   conversionHistory: ConversionHistoryItem[];
 }
 
 function ConversionHistory({ conversionHistory }: ConversionHistoryProps) {
+  const isMobile = window.innerWidth <= 600;
 
-  return (
-    <Card sx={{ minWidth: 300, p: 2 }}>
-      <CardContent>
+  if (isMobile) {
+    return (
+      <Card sx={{p: 2, mt:2 }}>
+        <CardContent>
         <h2>Conversion History</h2>
-        <div style={{ maxHeight: '200px', overflowY: 'scroll' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {conversionHistory.map(history => (
+              <Card key={history.id} elevation={3} sx={{ p: 2 }}>
+                <Typography variant="body2">
+                  <strong>Timestamp:</strong> {history.timestamp}
+                </Typography>
+                <Typography variant="body2">
+                  <strong>Source Currency:</strong> {history.sourceCurrency}
+                </Typography>
+                <Typography variant="body2">
+                  <strong>Target Currency:</strong> {history.targetCurrency}
+                </Typography>
+                <Typography variant="body2">
+                  <strong>Source Amount:</strong> {history.sourceAmount}
+                </Typography>
+                <Typography variant="body2">
+                  <strong>Converted Amount:</strong> {history.convertedAmount}
+                </Typography>
+              </Card>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  } else {
+    return (
+      <Card sx={{ minWidth: 300, p: 2 }}>
+        <CardContent>
+        <h2>Conversion History</h2>
+        <div style={{ maxHeight: '240px', overflowY: 'scroll' }}>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -45,9 +77,11 @@ function ConversionHistory({ conversionHistory }: ConversionHistoryProps) {
             </Table>
           </TableContainer>
         </div>
-      </CardContent>
-    </Card>
-  );
+        </CardContent>
+      
+      </Card>
+    );
+  }
 }
 
 export default ConversionHistory;
